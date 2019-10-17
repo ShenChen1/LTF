@@ -1,0 +1,6 @@
+[submodule "src/buildroot"]
+	path = src/buildroot
+	url = https://github.com/buildroot/buildroot
+[submodule "src/lcov"]
+	path = src/lcov
+	url = https://github.com/linux-test-project/lcov.git
