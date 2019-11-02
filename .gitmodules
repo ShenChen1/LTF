@@ -4,3 +4,6 @@
 [submodule "src/lcov"]
 	path = src/lcov
 	url = https://github.com/linux-test-project/lcov.git
+[submodule "src/testhelper"]
+	path = src/testhelper
+	url = https://github.com/ShenChen1/testhelper.git
