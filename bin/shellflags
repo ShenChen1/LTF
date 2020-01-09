@@ -1,0 +1,1 @@
+[ "" = "${SHELLFLAGS-}" ] || set $SHELLFLAGS

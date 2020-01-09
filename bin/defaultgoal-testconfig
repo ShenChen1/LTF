@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -aeu
+source shellflags
+
+echo creating "$TESTCONFIG ..."
+touch "$TESTCONFIG"
+
+TESTTARGET="demo"
+
+cat <<EOF > "$TESTCONFIG"
+export TESTTARGET ?= $TESTTARGET
+EOF
+
+cat "$TESTCONFIG"

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -eau
+source shellflags
+
+DEFAULTGOAL="$1"
+
+if [ -x "$TESTROOT"/bin/defaultgoal-"$DEFAULTGOAL" ]; then
+    "$TESTROOT"/bin/defaultgoal-"$DEFAULTGOAL"
+    exit $?
+else
+    defaultgoal-"$DEFAULTGOAL" || error no default goal "$DEFAULTGOAL"
+fi
+
