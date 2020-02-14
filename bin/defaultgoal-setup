@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+echo "$TESTROOT"
+
+case "$TESTCONFIG" in 
+    /*) true ;;
+    *) TESTCONFIG="$(pwd)/$TESTCONFIG"
+esac
+
+makecall -C "${TESTROOT}/components/setup/default" TESTCONFIG="$TESTCONFIG" setup

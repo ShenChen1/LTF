@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+source invokeparams
+
+case "$INVOKE_METHOD" in
+ssh)
+    invoke_ssh "$@"
+    ;;
+testhelper)
+    invoke_testhelper "$@"
+    ;;
+local)
+    invoke_local "$@"
+    ;;
+*) error cannot invoke, unknown method "$INVOKE_METHOD" ;;
+esac

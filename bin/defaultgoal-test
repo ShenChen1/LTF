@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+DEFAULTGOAL=${TEST_DEFAULTGOAL-unittest}
+
+E=0
+"$DEFAULTGOAL" || E=$?
+
+exit $E

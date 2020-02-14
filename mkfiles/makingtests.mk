@@ -16,11 +16,9 @@ include $(TESTCONFIG)
 endif
 
 # add new search path
-ifneq ($(TEST_PATHPREFIX),)
-PATH:=$(TEST_PATHPREFIX):$(TESTROOT)/bin:$(PATH)
-else
+PATH:=$(TESTROOT)/bin/flags:$(PATH)
+PATH:=$(TESTROOT)/bin/cmds:$(PATH)
 PATH:=$(TESTROOT)/bin:$(PATH)
-endif
 
 .DEFAULT:
 	@PATH="$(PATH)" defaultgoal $@

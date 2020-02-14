@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+main() {
+    checktestconfig || exit 1
+
+    case "$TESTCONFIG" in
+    /*) true ;;
+    *) TESTCONFIG="$(pwd)/$TESTCONFIG" ;;
+    esac
+
+    for ARG in *; do
+        [ -f "$ARG" ] || continue
+        case "$ARG" in
+        host_*.sh)
+            chmod +x "$ARG"
+            bash "$ARG" || exit $?
+            ;;
+        esac
+    done
+}
+
+main "$@"

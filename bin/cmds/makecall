@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+source _makeflags
+
+$MAKE "$@"

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+if ${TESTCONFIG_NOT_NEEDED-false}; then
+    exit 0
+fi
+
+if [ ! -f "${TESTCONFIG-testconfig.mk}" ]; then
+    (
+        echo "test configuration \"$(basename ${TESTCONFIG-testconfig.mk})\" does not exist"
+        echo "use"
+        echo ""
+        echo "     \"make testconfig\""
+        echo ""
+        echo "to create one"
+    ) >&2
+    exit 1
+fi
+
+exit 0
