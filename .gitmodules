@@ -7,3 +7,6 @@
 [submodule "src/testhelper"]
 	path = src/testhelper
 	url = https://github.com/ShenChen1/testhelper.git
+[submodule "src/envparser"]
+	path = src/envparser
+	url = https://github.com:ShenChen1/envparser.git
