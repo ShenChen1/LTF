@@ -15,7 +15,11 @@ ifeq ($(shell test -e $(TESTCONFIG) && echo 0),0)
 include $(TESTCONFIG)
 endif
 
+# python
+export PYTHONDONTWRITEBYTECODE ?= 1
+
 # add new search path
+PATH:=$(TESTROOT)/src/envparser:$(PATH)
 PATH:=$(TESTROOT)/bin/flags:$(PATH)
 PATH:=$(TESTROOT)/bin/cmds:$(PATH)
 PATH:=$(TESTROOT)/bin:$(PATH)

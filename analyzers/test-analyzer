@@ -1,2 +1,27 @@
 #!/usr/bin/env python
 
+import logging
+#!/usr/bin/env python
+
+import os
+import re
+import sys
+import io
+from envparser import envparser
+
+def analyzer(key):
+    testroot = os.getenv("TESTROOT")
+    hostname = os.getenv("TESTTARGET")
+    env = envparser(testroot + '/targets/' + hostname)
+    env.set("hostname", hostname)
+
+    # try to find
+    val = env.get(key)
+    if val:
+        print val
+    else:
+        # default value
+        os.system("cat " + testroot + "/analyzers/default/" + key)
+
+if __name__ == '__main__':
+    analyzer(sys.argv[1])
