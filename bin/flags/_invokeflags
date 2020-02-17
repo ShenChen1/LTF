@@ -1,0 +1,28 @@
+#!source bash
+
+[ "${_INVOKE_PARAMS-}" != true ] || return 0
+_INVOKE_PARAMS=true
+
+# default method
+INVOKE_METHOD=${INVOKE_METHOD-testhelper}
+
+[ ! -z "${IPADDR-}" ] || IPADDR=$("${TESTANALYZER}" "ipaddr")
+
+if [ "$INVOKE_METHOD" == "testhelper" ]; then
+    [ ! -z "${PORT-}" ] || PORT=$("${TESTANALYZER}" "port")
+    return
+fi
+
+[ ! -z "${LOGIN-}" ] || LOGIN=$("${TESTANALYZER}" "login")
+[ ! -z "${PASSWORD-}" ] || PASSWORD=$("${TESTANALYZER}" "password")
+
+if [ "$INVOKE_METHOD" == "ssh" ]; then
+    [ ! -z "${SSHPORT-}" ] || SSHPORT=$("${TESTANALYZER}" "sshport")
+    return
+fi
+
+if [ "$INVOKE_METHOD" == "telnet" ]; then
+    [ ! -z "${TELNETPORT-}" ] || TELNETPORT=$("${TESTANALYZER}" "telnetport")
+    return
+fi
+

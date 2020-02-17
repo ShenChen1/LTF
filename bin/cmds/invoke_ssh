@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+INVOKE_METHOD=ssh
+source _shellflags
+source _invokeflags
+
+ssh.pl $SSHPORT "$LOGIN@$IPADDR" "$PASSWORD" "$@"

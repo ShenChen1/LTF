@@ -6,13 +6,13 @@ source _invokeflags
 
 case "$INVOKE_METHOD" in
 ssh)
-    invoke_ssh "$@"
+    putfile_ssh "$@"
     ;;
 telnet)
-    invoke_telnet "$@"
+    putfile_telnet "$@"
     ;;
 testhelper)
-    invoke_testhelper "$@"
+    putfile_testhelper "$@"
     ;;
-*) error cannot invoke, unknown method "$INVOKE_METHOD" ;;
+*) error cannot putfile, unknown method "$INVOKE_METHOD" ;;
 esac
