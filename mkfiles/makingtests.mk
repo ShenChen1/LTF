@@ -4,6 +4,7 @@ SHELL:=/bin/bash
 export TESTROOT := $(shell pwd -P | sed -e 's,/LTF/.*,/LTF,')
 
 # export some useful tools
+$(shell ln -sf $(TESTROOT)/src/envparser/envparser.py $(TESTROOT)/analyzers/)
 export TESTANALYZER ?= $(TESTROOT)/analyzers/test-analyzer
 
 # export test config file
@@ -19,7 +20,6 @@ endif
 export PYTHONDONTWRITEBYTECODE ?= 1
 
 # add new search path
-PATH:=$(TESTROOT)/src/envparser:$(PATH)
 PATH:=$(TESTROOT)/bin/flags:$(PATH)
 PATH:=$(TESTROOT)/bin/cmds:$(PATH)
 PATH:=$(TESTROOT)/bin:$(PATH)

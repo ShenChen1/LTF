@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+INVOKE_METHOD=testhelper
+source _shellflags
+source _invokeflags
+
+testhelper "${IPADDR}:${PORT}" putfile "$@"

@@ -8,7 +8,7 @@ my $userhost=shift(@ARGV);
 my $password=shift(@ARGV);
 my $cmd=join(" ",@ARGV);
 
-open(P,"ssh.exp $port $userhost $password $cmd |") or die;
+open(P,"ssh.exp $port $userhost $password '$cmd' |") or die;
 my $l=0;
 my $pw=0;
 my $s="";
