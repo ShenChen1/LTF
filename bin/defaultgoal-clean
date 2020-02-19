@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+echo "rm -rf *.o *.pyc *.so *.a __* *~ core.[0-9]*"
+rm -rf *.o *.pyc *.so *.a __* *~ core.[0-9]*

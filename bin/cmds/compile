@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eau
+source _shellflags
+
+if [ $# = 1 ]; then
+    OUTPUT="-o __${1%%.*}"
+elif [ $# = 2 ]; then
+    OUTPUT="-o __${2}"
+else
+    error cannot compile, unknown args
+    exit
+fi
+
+COMPILER="$(${TESTANALYZER} arch)-g++"
+
+"$COMPILER" ${COMPILER_FLAGS-} \
+            ${COMPILER_INCLUDEDIRS-} \
+            ${COMPILER_DEFINES-} \
+            "$1" ${OUTPUT} \
+            ${COMPILER_LIBDIRS-} ${COMPILER_LINKLIBS-}

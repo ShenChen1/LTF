@@ -1,22 +1,53 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -aeu
 source _shellflags
 
-main() {
-    checktestconfig || exit 1
-
+check_test_config() {
     case "$TESTCONFIG" in
     /*) true ;;
     *) TESTCONFIG="$(pwd)/$TESTCONFIG" ;;
     esac
 
+    checktestconfig || exit 1
+}
+
+process_host_script() {
+    chmod +x "$1"
+    bash "$1"
+}
+
+process_target_script() {
+    putfile "$1" "$1"
+    invoke "chmod +x $1 && ./$1"
+    invoke "rm $1"
+}
+
+process_target_cpp() {
+    compile "$1"
+    for APP in __*; do
+        [ -f "$ARG" ] || continue
+        putfile "$APP" "$APP"
+        invoke "chmod +x $APP && ./$APP"
+        invoke "rm $APP"
+    done
+}
+
+main() {
+    # check config file
+    check_test_config
+
     for ARG in *; do
         [ -f "$ARG" ] || continue
         case "$ARG" in
         host_*.sh)
-            chmod +x "$ARG"
-            bash "$ARG" || exit $?
+            process_host_script "$ARG"
+            ;;
+        *.sh)
+            process_target_script "$ARG"
+            ;;
+        *.c | *.cpp)
+            process_target_cpp "$ARG"
             ;;
         esac
     done
