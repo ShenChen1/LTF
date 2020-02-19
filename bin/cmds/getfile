@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eau
+source _shellflags
+source _invokeflags
+
+case "$INVOKE_METHOD" in
+ssh)
+    getfile_ssh "$@"
+    ;;
+telnet)
+    getfile_telnet "$@"
+    ;;
+testhelper)
+    getfile_testhelper "$@"
+    ;;
+*) error cannot putfile, unknown method "$INVOKE_METHOD" ;;
+esac

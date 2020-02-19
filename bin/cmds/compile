@@ -14,6 +14,7 @@ fi
 
 COMPILER="$(${TESTANALYZER} arch)-g++"
 
+echo "compiling $1 ..."
 "$COMPILER" ${COMPILER_FLAGS-} \
             ${COMPILER_INCLUDEDIRS-} \
             ${COMPILER_DEFINES-} \

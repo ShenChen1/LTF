@@ -5,4 +5,4 @@ INVOKE_METHOD=testhelper
 source _shellflags
 source _invokeflags
 
-testhelper "${IPADDR}:${PORT}" putfile "$@"
+testhelper "$IPADDR:$PORT" putfile "$@"
