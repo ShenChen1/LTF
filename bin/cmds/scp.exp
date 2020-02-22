@@ -1,0 +1,18 @@
+#!/usr/bin/env expect
+
+set port [lrange $argv 0 0]
+set password [lrange $argv 1 1]
+set args [lrange $argv 2 [llength $argv]]
+
+set timeout 100
+eval spawn scp -q -P $port -o \"RSAAuthentication no\" -o \"PubkeyAuthentication no\" -o \"StrictHostKeyChecking no\" -o \"UserKnownHostsFile /dev/null\" -F /dev/null $args
+
+expect {
+    default { exit 2 }
+    "Are you sure you want to continue connecting" { send "yes\r"
+          exp_continue
+    }
+    assword: { send -- $password\r }
+}
+
+expect eof

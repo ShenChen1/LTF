@@ -13,20 +13,19 @@ check_test_config() {
 }
 
 process_host_script() {
-    chmod +x "$1"
     bash "$1"
 }
 
 process_target_script() {
     putfile "$1" "$1"
-    invoke "chmod +x $1 && ./$1"
+    invoke "bash $1"
     invoke "rm $1"
 }
 
 process_target_cpp() {
     compile "$1"
-    for APP in __*; do
-        [ -f "$ARG" ] || continue
+    for APP in "__$1"*; do
+        [ -f "$APP" ] || continue
         putfile "$APP" "$APP"
         invoke "chmod +x $APP && ./$APP"
         invoke "rm $APP"
