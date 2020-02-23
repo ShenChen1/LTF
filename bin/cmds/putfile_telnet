@@ -6,4 +6,4 @@ source _shellflags
 source _invokeflags
 
 [ ! -z "${PROMPT-}" ] || PROMPT=$("${TESTANALYZER}" "prompt")
-telnet.pl "$IPADDR" "$TELNETPORT" "$LOGIN" "$PASSWORD" "$PROMPT" "$@"
+telnetcp.py "$IPADDR" "$TELNETPORT" "$LOGIN" "$PASSWORD" "$PROMPT" "$1" "${2-$1}"

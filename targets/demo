@@ -1,6 +1,5 @@
-ipaddr=127.0.0.1
-login=sc
-password=shen_chen1
-#arch=aarch64-linux-gnu
-#arch=arm-cortexa9_neon-linux-gnueabihf
-arch=x86_64-redhat-linux
+ipaddr=192.168.0.123
+login=root
+password=123
+arch=arm-cortexa9_neon-linux-gnueabihf
+setupmethod=telnet

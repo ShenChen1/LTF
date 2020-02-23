@@ -3,8 +3,6 @@
 set -aeu
 source _shellflags
 
-echo "$TESTROOT"
-
 case "$TESTCONFIG" in 
     /*) true ;;
     *) TESTCONFIG="$(pwd)/$TESTCONFIG"

@@ -25,22 +25,25 @@ echo " no"
 egrep -q '^FA|cannot open connection|make setup' $TMPFILE || cat "$TMPFILE" >&2
 rm -f "$TMPFILE"
 
-if invoke_ssh "ls /tmp/testhelperd" >/dev/null 2>&1; then
+# start setup
+INVOKE_METHOD=$("${TESTANALYZER}" "setupmethod")
+if invoke "ls /tmp/testhelperd" >/dev/null 2>&1; then
     echo "found testhelper ..."
 else
     echo "creating testhelper ..."
     makecall -C "${TESTHELPER_SRCDIR}" CROSS_COMPILE="$("${TESTANALYZER}" "arch")-"
  
     echo "copying testhelper ...."
-    putfile_ssh "${TESTHELPERD}" /tmp/
+    putfile "${TESTHELPERD}" /tmp/
 fi
 
 echo "invoking testhelper ..."
 PORT="$("${TESTANALYZER}" "port")"
-invoke_ssh "rm -rf /tmp/testhelper_$PORT && mkdir -p /tmp/testhelper_$PORT && mv /tmp/testhelperd /tmp/testhelper_$PORT"
-invoke_ssh "cd /tmp/testhelper_$PORT && ./testhelperd -d -p $PORT -v > /dev/null" 
+invoke "rm -rf /tmp/testhelper_$PORT && mkdir -p /tmp/testhelper_$PORT && mv /tmp/testhelperd /tmp/testhelper_$PORT"
+invoke "cd /tmp/testhelper_$PORT && chmod +x ./testhelperd && ./testhelperd -d -p $PORT -v > /dev/null" 
 
 echo -n "checking if testhelper is running - "
+INVOKE_METHOD=testhelper
 if invoke true 2>/dev/null
 then
     echo yes

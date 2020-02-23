@@ -4,7 +4,8 @@ set host [lrange $argv 0 0]
 set port [lrange $argv 1 1]
 set user [lrange $argv 2 2]
 set password [lrange $argv 3 3]
-eval set cmd [lrange $argv 4 [llength $argv]]
+set prompt [lrange $argv 4 4]
+eval set cmd [lrange $argv 5 [llength $argv]]
 
 set timeout 25
 eval spawn telnet $host $port
@@ -17,10 +18,10 @@ expect {
         send "$password\r"
         exp_continue
     }
-    "]#" {
+    "$prompt" {
         send -- "$cmd || echo +++-exit-+++ \$\?\r"
     }
 }
 set timeout 300
 
-expect "]#"
+expect "$prompt"

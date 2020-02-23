@@ -18,38 +18,47 @@ process_host_script() {
 
 process_target_script() {
     putfile "$1" "$1"
-    invoke "bash $1"
+    invoke "sh $1"
     invoke "rm $1"
 }
 
 process_target_cpp() {
+    local APP=__${1%%.*}
     compile "$1"
-    for APP in "__$1"*; do
-        [ -f "$APP" ] || continue
-        putfile "$APP" "$APP"
-        invoke "chmod +x $APP && ./$APP"
-        invoke "rm $APP"
-    done
+    putfile "$APP" "$APP"
+    invoke "chmod +x $APP && ./$APP"
+    invoke "rm $APP"
 }
 
 main() {
+    __HOST=false
+
     # check config file
     check_test_config
 
-    for ARG in *; do
+    for ARG in host_*; do
         [ -f "$ARG" ] || continue
         case "$ARG" in
         host_*.sh)
             process_host_script "$ARG"
-            ;;
-        *.sh)
-            process_target_script "$ARG"
-            ;;
-        *.c | *.cpp)
-            process_target_cpp "$ARG"
+            __HOST=true
             ;;
         esac
     done
+
+    $__HOST || { 
+        for ARG in *; do
+            [ -f "$ARG" ] || continue
+            case "$ARG" in
+            *.sh)
+                process_target_script "$ARG"
+                ;;
+            *.c | *.cpp)
+                process_target_cpp "$ARG"
+                ;;
+            esac
+        done
+    }
 }
 
 main "$@"

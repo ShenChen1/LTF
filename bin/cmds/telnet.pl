@@ -7,9 +7,10 @@ my $host=shift(@ARGV);
 my $port=shift(@ARGV);
 my $user=shift(@ARGV);
 my $password=shift(@ARGV);
+my $prompt=shift(@ARGV);
 my $cmd=join(" ",@ARGV);
 
-open(P,"telnet.exp $host $port $user $password '$cmd' |") or die;
+open(P,"telnet.exp $host $port $user $password $prompt '$cmd' |") or die;
 my $l=0;
 my $pr=0;
 my $s="";
@@ -20,7 +21,7 @@ while (<P>) {
 		$s.=$_;
 		next;
 	}
-	if ($pr==0 && /]#/) {
+	if ($pr==0 && /$prompt/) {
 		$pr=1;
 		$s.=$_;
 		next;
@@ -29,7 +30,7 @@ while (<P>) {
 		$s.=$_;
 		next;
 	}
-	if ($pr==1 && /]#$/) {
+	if ($pr==1 && /$prompt/) {
 		$pr=0;
 		$s.=$_;
 		next;
