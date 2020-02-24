@@ -16,6 +16,9 @@ ifeq ($(shell test -e $(TESTCONFIG) && echo 0),0)
 include $(TESTCONFIG)
 endif
 
+# setup requirements
+export SETUPREQUIREMENTS ?=
+
 # python
 export PYTHONDONTWRITEBYTECODE ?= 1
 

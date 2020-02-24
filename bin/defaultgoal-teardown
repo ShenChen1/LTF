@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+case "$TESTCONFIG" in 
+    /*) true ;;
+    *) TESTCONFIG="$(pwd)/$TESTCONFIG"
+esac
+
+makecall -C "${TESTROOT}/components/teardown/default" TESTCONFIG="$TESTCONFIG" teardown
