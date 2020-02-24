@@ -10,15 +10,15 @@ TMP=$(mktemp /tmp/$(basename $0).XXXXXXXXXX)
 # install testhelper first
 echo testhelper >"$TMP"
 # setup requirement
-echo SETUPREQUIREMENTS >>"$TMP"
+for setup in $SETUPREQUIREMENTS; do
+    echo $setup >>"$TMP"
+done
 
-while read SETUP
-do
+while read SETUP; do
     [ "" != "$SETUP" ] || continue
-    echo "+++ setting up setup ${SETUP} on ${TESTTARGET} ..." 
+    echo "+++ setting up setup ${SETUP} on ${TESTTARGET} ..."
     DEFAULTGOAL="${TESTROOT}/components/setup/${SETUP}"
-    if [ -d "$DEFAULTGOAL" ]
-    then
+    if [ -d "$DEFAULTGOAL" ]; then
         $MAKE -C "$DEFAULTGOAL" test
     else
         echo "WARNING: $DEFAULTGOAL : no such setup directory" >&2
