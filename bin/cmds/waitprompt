@@ -11,7 +11,7 @@ while true
 do
     echo -n .
     OK=$(invoke "echo ok" 2>/dev/null) || true
-    [ "$OK" != ok ] || { echo ; echo SSH connect succeeded after $SECONDS seconds; break ; }
+    [ "$OK" != ok ] || { echo; echo SSH connect succeeded after $SECONDS seconds; break; }
     sleep 1
     if [ $WAITPROMPT_TIMEOUT -le $SECONDS ]
     then

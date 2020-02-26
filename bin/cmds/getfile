@@ -8,9 +8,6 @@ case "$INVOKE_METHOD" in
 ssh)
     getfile_ssh "$@"
     ;;
-telnet)
-    getfile_telnet "$@"
-    ;;
 testhelper)
     getfile_testhelper "$@"
     ;;

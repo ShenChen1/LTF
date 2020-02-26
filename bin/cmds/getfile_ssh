@@ -5,8 +5,4 @@ INVOKE_METHOD=ssh
 source _shellflags
 source _invokeflags
 
-if [ $# = 1 ]; then
-    scp.pl "$SSHPORT" "$PASSWORD" "$LOGIN@$IPADDR:$1" "$1" 
-else
-    scp.pl "$SSHPORT" "$PASSWORD" "$LOGIN@$IPADDR:$1" "$2" 
-fi
+scp.pl "$SSHPORT" "$PASSWORD" "$LOGIN@$IPADDR:$1" "${2:-$1}"
