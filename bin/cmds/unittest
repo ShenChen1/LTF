@@ -13,21 +13,56 @@ check_test_config() {
 }
 
 process_host_script() {
-    bash "$1"
+    local tmp=$(mktemp /tmp/$(basename $0).XXXXX)
+    echo "sh $1" >>$tmp
+    create_unittest $tmp $1
 }
 
 process_target_script() {
-    putfile "$1" "$1"
-    invoke "sh $1"
-    invoke "rm $1"
+    local tmp=$(mktemp /tmp/$(basename $0).XXXXX)
+    echo "putfile \'$1\' \'$1\'" >>$tmp
+    echo "invoke \'sh $1\'" >>$tmp
+    echo "invoke \'rm $1\'" >>$tmp
+    create_unittest $tmp $1
 }
 
 process_target_cpp() {
-    local APP=__${1%%.*}
-    compile "$1"
-    putfile "$APP" "$APP"
-    invoke "chmod +x $APP && ./$APP"
-    invoke "rm $APP"
+    local tmp=$(mktemp /tmp/$(basename $0).XXXXX)
+    local app=__${1%%.*}
+    echo "compile \'$1\'" >>$tmp
+    echo "putfile \'$app\' \'$app\'" >>$tmp
+    echo "invoke \'chmod +x $app && ./$app\'" >>$tmp
+    echo "invoke \'rm $app\'" >>$tmp
+    create_unittest $tmp $1
+}
+
+create_unittest() {
+    local -r cmdfile="$1"
+    local -r testname="${2%%.*}"
+    local -r classname="${PWD##*/}"
+    local -r pyunittest="__unittest_${classname}_${testname}.py"
+
+    local cmdlines="["
+    while read line; do
+        cmdlines="${cmdlines}\"${line}\", "
+    done <"$cmdfile"
+    cmdlines="${cmdlines} \"true\"]"
+
+    cat >$pyunittest <<EOF
+# automatically created by $(basename $0)
+import os
+import unittest
+
+class Test__${classname}(unittest.TestCase):
+
+    def test__${testname}(self):
+        for cmd in ${cmdlines}:
+            self.assertEqual(0,os.system(cmd))
+
+if __name__ == '__main__':
+    unittest.main()
+EOF
+    rm -f $cmdfile
 }
 
 main() {
@@ -46,7 +81,7 @@ main() {
         esac
     done
 
-    $__HOST || { 
+    $__HOST || {
         for ARG in *; do
             [ -f "$ARG" ] || continue
             case "$ARG" in
@@ -59,6 +94,10 @@ main() {
             esac
         done
     }
+
+    for _PYTHON in *.py; do
+        python $_PYTHON || E=1
+    done
 }
 
 main "$@"
