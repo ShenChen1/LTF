@@ -36,6 +36,21 @@ process_target_cpp() {
     create_unittest $tmp $1
 }
 
+process_python_testcase() {
+    local -a SED_PYTHON_RULES=(
+        '/^import unittest/a from xmlrunner import XMLTestRunner'
+        's/unittest\.main\((.*)\)/unittest.main(testRunner=XMLTestRunner(output="xml-reports"))/'
+    )
+
+    if "${XMLOUTPUT-false}"; then
+        for rule in "${SED_PYTHON_RULES[@]}"; do
+            sed -i -re "$rule" "$1"
+        done
+    fi
+
+    echo "$1"
+}
+
 create_unittest() {
     local -r cmdfile="$1"
     local -r testname="${2%%.*}"
@@ -51,13 +66,21 @@ create_unittest() {
     cat >$pyunittest <<EOF
 # automatically created by $(basename $0)
 import os
+import sys
+import subprocess
 import unittest
 
 class Test__${classname}(unittest.TestCase):
 
     def test__${testname}(self):
         for cmd in ${cmdlines}:
-            self.assertEqual(0,os.system(cmd))
+            proc = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
+            result = proc.communicate()
+            if result[0] != "":
+                sys.stdout.write(result[0])
+            if result[1] != "":
+                sys.stderr.write(result[1])
+            self.assertEqual(0, proc.returncode)
 
 if __name__ == '__main__':
     unittest.main()
@@ -95,9 +118,11 @@ main() {
         done
     }
 
+    E=0
     for _PYTHON in *.py; do
-        python $_PYTHON || E=1
+        python $(process_python_testcase "$_PYTHON") || E=1
     done
+    exit $E
 }
 
 main "$@"

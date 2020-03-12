@@ -1,1 +1,3 @@
 [ "" = "${SHELLFLAGS-}" ] || set $SHELLFLAGS
+# shell debuginfo
+export PS4='+${BASH_SOURCE}:${LINENO}: '
