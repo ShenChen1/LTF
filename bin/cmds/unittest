@@ -3,15 +3,6 @@
 set -aeu
 source _shellflags
 
-check_test_config() {
-    case "$TESTCONFIG" in
-    /*) true ;;
-    *) TESTCONFIG="$(pwd)/$TESTCONFIG" ;;
-    esac
-
-    checktestconfig || exit 1
-}
-
 process_host_script() {
     local tmp=$(mktemp /tmp/$(basename $0).XXXXX)
     echo "sh $1" >>$tmp
@@ -63,6 +54,11 @@ create_unittest() {
     done <"$cmdfile"
     cmdlines="${cmdlines} \"true\"]"
 
+    local output="None"
+    if "${XMLOUTPUT-false}"; then
+        output="subprocess.PIPE"
+    fi
+
     cat >$pyunittest <<EOF
 # automatically created by $(basename $0)
 import os
@@ -74,11 +70,11 @@ class Test__${classname}(unittest.TestCase):
 
     def test__${testname}(self):
         for cmd in ${cmdlines}:
-            proc = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
+            proc = subprocess.Popen(cmd,stdout=${output},stderr=${output},shell=True)
             result = proc.communicate()
-            if result[0] != "":
+            if result[0] != None and result[0] != '':
                 sys.stdout.write(result[0])
-            if result[1] != "":
+            if result[1] != None and result[0] != '':
                 sys.stderr.write(result[1])
             self.assertEqual(0, proc.returncode)
 
@@ -92,7 +88,7 @@ main() {
     local __host=false
 
     # check config file
-    check_test_config
+    checktestconfig || exit 1
 
     for file in host_*; do
         [ -f "$file" ] || continue

@@ -3,9 +3,18 @@
 set -aeu
 source _shellflags
 
-DEFAULTGOAL=${TEST_DEFAULTGOAL-unittest}
+case "$TESTCONFIG" in
+    /*) true ;;
+    *) TESTCONFIG="$(pwd)/$TESTCONFIG"
+esac
+checktestconfig || exit 1
+
+DEFAULTGOAL=unittest
+if [ "${TESTSUITE_TESTS:-none}" != "none" ]; then
+    DEFAULTGOAL=testsuite
+fi
 
 E=0
-"$DEFAULTGOAL" || E=$?
+TESTCONFIG="$TESTCONFIG" "$DEFAULTGOAL" || E=$?
 
 exit $E

@@ -7,5 +7,9 @@ case "$TESTCONFIG" in
     /*) true ;;
     *) TESTCONFIG="$(pwd)/$TESTCONFIG"
 esac
+checktestconfig || exit 1
+
+# find all setup requirement
+unset TESTSUITE_TESTS
 
 makecall -C "${TESTROOT}/components/setup/default" TESTCONFIG="$TESTCONFIG" setup
