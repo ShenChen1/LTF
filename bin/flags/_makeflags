@@ -1,2 +1,2 @@
 MAKE="make --no-print-directory"
-[ "" = "${MKFLAGS-}" ] || MAKE="make $MKFLAGS" 
+[ "" = "${MKFLAGS-}" ] || MAKE="make $MKFLAGS"

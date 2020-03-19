@@ -3,7 +3,7 @@
 set -aeu
 source _shellflags
 
-case "$TESTCONFIG" in 
+case "$TESTCONFIG" in
     /*) true ;;
     *) TESTCONFIG="$(pwd)/$TESTCONFIG"
 esac

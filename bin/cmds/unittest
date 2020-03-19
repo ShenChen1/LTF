@@ -89,38 +89,38 @@ EOF
 }
 
 main() {
-    __HOST=false
+    local __host=false
 
     # check config file
     check_test_config
 
-    for ARG in host_*; do
-        [ -f "$ARG" ] || continue
-        case "$ARG" in
+    for file in host_*; do
+        [ -f "$file" ] || continue
+        case "$file" in
         host_*.sh)
-            process_host_script "$ARG"
-            __HOST=true
+            process_host_script "$file"
+            __host=true
             ;;
         esac
     done
 
-    $__HOST || {
-        for ARG in *; do
-            [ -f "$ARG" ] || continue
-            case "$ARG" in
+    $__host || {
+        for file in *; do
+            [ -f "$file" ] || continue
+            case "$file" in
             *.sh)
-                process_target_script "$ARG"
+                process_target_script "$file"
                 ;;
             *.c | *.cpp)
-                process_target_cpp "$ARG"
+                process_target_cpp "$file"
                 ;;
             esac
         done
     }
 
-    E=0
-    for _PYTHON in *.py; do
-        python $(process_python_testcase "$_PYTHON") || E=1
+    local E=0
+    for _py in *.py; do
+        python $(process_python_testcase "$_py") || E=1
     done
     exit $E
 }

@@ -32,7 +32,6 @@ if invoke "ls /tmp/testhelperd" >/dev/null 2>&1; then
 else
     echo "creating testhelper ..."
     makecall -C "${TESTHELPER_SRCDIR}" CROSS_COMPILE="$("${TESTANALYZER}" "arch")-"
- 
     echo "copying testhelper ...."
     putfile "${TESTHELPERD}" /tmp/
 fi

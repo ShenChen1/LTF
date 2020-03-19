@@ -7,18 +7,6 @@ export TESTROOT := $(shell pwd -P | sed -e 's,/LTF/.*,/LTF,')
 $(shell ln -sf $(TESTROOT)/src/envparser/envparser.py $(TESTROOT)/analyzers/)
 export TESTANALYZER ?= $(TESTROOT)/analyzers/test-analyzer
 
-# export test config file
-export TESTCONFIG ?= testconfig.mk
-ifneq ($(shell echo $(TESTCONFIG) | cut -c1),/)
-TESTCONFIG:=$(shell echo "$$(pwd)/$(TESTCONFIG)")
-endif
-ifeq ($(shell test -e $(TESTCONFIG) && echo 0),0)
-include $(TESTCONFIG)
-endif
-
-# setup requirements
-export SETUPREQUIREMENTS ?=
-
 # python
 export PYTHONDONTWRITEBYTECODE ?= 1
 
@@ -26,6 +14,22 @@ export PYTHONDONTWRITEBYTECODE ?= 1
 PATH:=$(TESTROOT)/bin/flags:$(PATH)
 PATH:=$(TESTROOT)/bin/cmds:$(PATH)
 PATH:=$(TESTROOT)/bin:$(PATH)
+
+# export setup requirements
+export SETUPREQUIREMENTS ?=
+
+# export testsuite file
+export TESTSUITE ?= testsuite.mk
+ifeq ($(shell test -e $(TESTSUITE) && echo 0),0)
+TESTSUITE_TESTS :=
+include $(TESTSUITE)
+endif
+
+# export test config file
+export TESTCONFIG ?= testconfig.mk
+ifeq ($(shell test -e $(TESTCONFIG) && echo 0),0)
+include $(TESTCONFIG)
+endif
 
 .DEFAULT:
 	@PATH="$(PATH)" defaultgoal $@
