@@ -9,4 +9,9 @@ case "$TESTCONFIG" in
 esac
 checktestconfig || exit 1
 
+if [ "${TESTSUITE_TESTS:-none}" != "none" ]; then
+    SETUPREQUIREMENTS=$(setuprequirement)
+    unset TESTSUITE_TESTS
+fi
+
 makecall -C "${TESTROOT}/components/teardown/default" TESTCONFIG="$TESTCONFIG" teardown

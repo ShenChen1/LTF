@@ -9,7 +9,9 @@ case "$TESTCONFIG" in
 esac
 checktestconfig || exit 1
 
-# find all setup requirement
-unset TESTSUITE_TESTS
+if [ "${TESTSUITE_TESTS:-none}" != "none" ]; then
+    SETUPREQUIREMENTS=$(setuprequirement)
+    unset TESTSUITE_TESTS
+fi
 
 makecall -C "${TESTROOT}/components/setup/default" TESTCONFIG="$TESTCONFIG" setup

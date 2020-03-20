@@ -3,11 +3,9 @@
 set -aeu
 source _shellflags
 
-GOAL=${1-test}
-
 do_test() {
     local path="$1"
-    makecall -C "$path" "$GOAL"
+    makecall -C "$path" test
 }
 
 do_result() {

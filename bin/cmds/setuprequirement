@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -aeu
+source _shellflags
+
+TMPFILE="$(mktemp /tmp/setupXXXXXXXXX)"
+trap 'rm -f "$TMPFILE"' 0 1 2 3 15
+
+do_one() {
+    local path="$1"
+    local output="$(makecall -C "$path" env | grep -e "^SETUPREQUIREMENTS" | cut -d'=' -f2)"
+    for one in $output; do
+        echo $one >> $TMPFILE
+    done
+}
+
+do_search() {
+    local -r tests="$1"
+
+    for t in $tests; do
+        do_one "$t"
+    done
+}
+
+main() {
+    local -r tests=${TESTSUITE_TESTS-}
+    local _tmp=""
+
+    do_search "$tests"
+
+    while read SETUP; do
+        [ "" != "$SETUP" ] || continue
+        _tmp="$_tmp $SETUP"
+    done <"$TMPFILE"
+
+    echo "$_tmp"
+}
+
+main "$@"
