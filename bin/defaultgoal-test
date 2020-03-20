@@ -10,7 +10,7 @@ esac
 checktestconfig || exit 1
 
 DEFAULTGOAL=unittest
-if [ "${TESTSUITE_TESTS:-none}" != "none" ]; then
+if [ "${TESTSUITE_TESTS-none}" != "none" ]; then
     DEFAULTGOAL=testsuite
 fi
 

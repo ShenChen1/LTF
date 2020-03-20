@@ -9,7 +9,7 @@ do_test() {
 }
 
 do_result() {
-    ls "$1"
+
 }
 
 do_serial() {

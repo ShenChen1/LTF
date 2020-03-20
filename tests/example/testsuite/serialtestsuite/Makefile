@@ -1,0 +1,1 @@
+include ../../../../mkfiles/makingtests.mk
