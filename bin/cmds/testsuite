@@ -3,13 +3,59 @@
 set -aeu
 source _shellflags
 
+copyfiles() {
+    _V="$1"
+    _FROM="$2"
+    _TO="$3"
+
+    for _FILE in "$_FROM"/*; do
+        [ -e "$_FILE" ] || continue
+        [ ! -h "$_FILE" ] || continue
+        _FILENAME=$(basename "$_FILE")
+        _T="$_TO/$_FILENAME"
+        if [ ! -e "$_T" ]; then
+            if [ -d "$_FILE" ]; then
+                cp -rf "$_FILE" "$_T"
+            else
+                cat $_V "$_FILE" >"$_T"
+            fi
+        else
+            _N=1
+            while true; do
+                case "$_FILENAME" in
+                *.*)
+                    _P="${_FILENAME%.*}"
+                    _S="${_FILENAME##*.}"
+                    _T="$_TO/$_P""_$_N.$_S"
+                    ;;
+                *) _T="$_TO/$_FILENAME"_$_N ;;
+                esac
+                [ -e "$_T" ] || break
+                _N=$(expr $_N + 1)
+            done
+            if [ -d "$_FILE" ]; then
+                cp -rf "$_FILE" "$_T"
+            else
+                cat $_V "$_FILE" >"$_T"
+            fi
+        fi
+    done
+}
+
 do_test() {
-    local path="$1"
+    local -r path="$1"
     makecall -C "$path" test
 }
 
 do_result() {
+    local -r path="$1"
 
+    if [ "${XMLOUTPUT-false}" = true ]; then
+        mkdir -p xml-reports
+        if [ -d "$path"/xml-reports ]; then
+            copyfiles -v "$path/xml-reports" xml-reports
+        fi
+    fi
 }
 
 do_serial() {
@@ -38,7 +84,8 @@ do_parallel() {
     trap_handler() {
         for p in $_pids; do
             chains=$(pstree -p $p)
-            [ "$chains" != "" ] && echo $chains; killtree $p
+            [ "$chains" != "" ] && echo $chains
+            killtree $p
         done
         exit 1
     }
