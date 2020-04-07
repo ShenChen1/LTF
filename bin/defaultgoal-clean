@@ -5,3 +5,10 @@ source _shellflags
 
 echo "rm -rf *.o *.pyc *.so *.a __* *~ core.[0-9]* xml-reports"
 rm -rf *.o *.pyc *.so *.a __* *~ core.[0-9]* xml-reports
+
+E=0
+if [ "${TESTSUITE_TESTS-none}" != "none" ]; then
+    TESTCONFIG="$TESTCONFIG" GOAL="clean" "testsuite" || E=$?
+fi
+
+exit $E

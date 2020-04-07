@@ -44,7 +44,7 @@ copyfiles() {
 
 do_test() {
     local -r path="$1"
-    makecall -C "$path" test
+    makecall -C "$path" $GOAL
 }
 
 do_result() {
@@ -62,8 +62,10 @@ do_serial() {
     local -r tests="$1"
 
     for t in $tests; do
+        echo -e "\n+++ start: $GOAL $t ..."
         do_test "$t"
         do_result "$t"
+        echo -e "+++ finish: $GOAL $t ..."
     done
 }
 

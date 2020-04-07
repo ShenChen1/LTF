@@ -15,6 +15,6 @@ if [ "${TESTSUITE_TESTS-none}" != "none" ]; then
 fi
 
 E=0
-TESTCONFIG="$TESTCONFIG" "$DEFAULTGOAL" || E=$?
+TESTCONFIG="$TESTCONFIG" GOAL="test" "$DEFAULTGOAL" || E=$?
 
 exit $E
