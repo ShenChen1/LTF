@@ -21,6 +21,7 @@ export SETUPREQUIREMENTS ?=
 # export testsuite file
 export TESTSUITE ?= testsuite.mk
 ifeq ($(shell test -e $(TESTSUITE) && echo 0),0)
+TESTSUITE_TESTS := # To avoid adding cases repeatly
 include $(TESTSUITE)
 export TESTSUITE_TESTS ?=
 export TESTSUITE_PARALLEL ?=

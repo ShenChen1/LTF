@@ -23,3 +23,5 @@ putfile "$file" "./nodir/"
 
 echo "test failure 2"
 putfile "nofile" "./nodir/"
+
+exit 0
