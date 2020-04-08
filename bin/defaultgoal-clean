@@ -8,7 +8,7 @@ rm -rf *.o *.pyc *.so *.a __* *~ core.[0-9]* xml-reports
 
 E=0
 if [ "${TESTSUITE_TESTS-none}" != "none" ]; then
-    TESTCONFIG="$TESTCONFIG" GOAL="clean" "testsuite" || E=$?
+    TESTCONFIG="$TESTCONFIG" GOALPARAMTERS="clean" "testsuite" || E=$?
 fi
 
 exit $E

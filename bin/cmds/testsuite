@@ -42,9 +42,8 @@ copyfiles() {
     done
 }
 
-do_test() {
-    local -r path="$1"
-    makecall -C "$path" $GOAL
+do_work() {
+    makecall -C "$1" $2
 }
 
 do_result() {
@@ -60,10 +59,11 @@ do_result() {
 
 do_serial() {
     local -r tests="$1"
+    local -r paramters="$2"
 
     for t in $tests; do
         echo -e "\n+++ start: $GOAL $t ..."
-        do_test "$t"
+        do_work "$t" "$paramters"
         do_result "$t"
         echo -e "+++ finish: $GOAL $t ..."
     done
@@ -94,7 +94,7 @@ do_parallel() {
 
     trap trap_handler 1 2 3 15
     for t in $tests; do
-        (do_test "$t") &
+        (do_work "$t" "$paramters") &
         _pids="$_pids $!"
     done
     wait
@@ -108,11 +108,13 @@ do_parallel() {
 main() {
     local -r tests=${TESTSUITE_TESTS-}
     unset TESTSUITE_TESTS
+    local -r paramters=${GOALPARAMTERS-}
+    unset GOALPARAMTERS
 
     if ${TESTSUITE_PARALLEL:-false}; then
-        do_parallel "$tests"
+        do_parallel "$tests" "$paramters"
     else
-        do_serial "$tests"
+        do_serial "$tests" "$paramters"
     fi
 }
 
