@@ -9,4 +9,4 @@
 	url = https://github.com/ShenChen1/testhelper.git
 [submodule "src/envparser"]
 	path = src/envparser
-	url = https://github.com:ShenChen1/envparser.git
+	url = https://github.com/ShenChen1/envparser.git

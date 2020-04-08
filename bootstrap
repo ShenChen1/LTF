@@ -4,3 +4,5 @@ set -eu
 cd $(dirname $0)
 
 git submodule init
+git submodule update --init src/envparser
+git submodule update --init src/testhelper
