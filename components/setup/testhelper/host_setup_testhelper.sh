@@ -8,17 +8,15 @@ echo -n "checking if testhelper is reachable -"
 TMPFILE="$(mktemp /tmp/setupttestexecdXXXXXXXXX)"
 trap 'rm -f "$TMPFILE"' 0 1 2 3 15
 
-for i in {1..5}
-do
-    if invoke true 2>>"$TMPFILE"
-    then
+for i in {1..5}; do
+    if invoke true 2>>"$TMPFILE"; then
         rm -f "$TMPFILE"
         echo " yes"
         exit 0
     else
         echo -n "-"
         sleep 1
-        echo "---- retry to connect ($i/5)----">>"$TMPFILE"
+        echo "---- retry to connect ($i/5)----" >>"$TMPFILE"
     fi
 done
 echo " no"
@@ -39,12 +37,11 @@ fi
 echo "invoking testhelper ..."
 PORT="$("${TESTANALYZER}" "port")"
 invoke "rm -rf /tmp/testhelper_$PORT && mkdir -p /tmp/testhelper_$PORT && mv /tmp/testhelperd /tmp/testhelper_$PORT"
-invoke "cd /tmp/testhelper_$PORT && chmod +x ./testhelperd && ./testhelperd -d -p $PORT -v > /dev/null" 
+invoke "cd /tmp/testhelper_$PORT && chmod +x ./testhelperd && ./testhelperd -d -p $PORT -v > /dev/null"
 
 echo -n "checking if testhelper is running - "
 INVOKE_METHOD=testhelper
-if invoke true 2>/dev/null
-then
+if invoke true 2>/dev/null; then
     echo yes
 else
     echo no

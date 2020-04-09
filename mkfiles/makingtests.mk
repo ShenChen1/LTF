@@ -27,7 +27,7 @@ export TESTSUITE_TESTS ?=
 export TESTSUITE_PARALLEL ?=
 endif
 
-# export test config file
+# export testconfig file
 export TESTCONFIG ?= testconfig.mk
 ifeq ($(shell test -e $(TESTCONFIG) && echo 0),0)
 include $(TESTCONFIG)
