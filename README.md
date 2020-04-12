@@ -1,6 +1,6 @@
 # LTF
 
-
+Embedded Linux System Test Framework
 
 ## HOWTO
 
@@ -21,6 +21,25 @@
     - uninstall compontents
     - recover the status before test
 
+## Running on Docker
+
+* Build the base image.
+
+```
+docker build -t env-for-ltf .
+```
+
+* Run container for LTF
+
+```
+docker run \
+-it `#Interactive with console` \
+--rm `#Automatically remove container when it exits` \
+-v $(pwd):/work/LTF `#Mount icomd directory` \
+-w /work/LTF `#Set initial directory` \
+env-for-ltf
+```
+
 ## Repository description
 
 Top level of repository can be divided into the following directories:
@@ -38,8 +57,9 @@ Top level of repository can be divided into the following directories:
     - `teardown` - the components which will be uninstalled from target when `make teardown`
 * `mkfiles` - some makefiles needed to be imported
 * `src` - some external repositories
-    - `buildroot` - for target tools generation
+    - `buildroot` - (will be used for target tools generation)
     - `envparser` - pylib to add, delete, replace ENV
+    - `lcov` - (will be used for coverage)
     - `testhelper` - for unified communication with target
 * `targets` - some targets
 * `tests` - some tests running on the targets
