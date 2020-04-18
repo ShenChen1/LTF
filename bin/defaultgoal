@@ -11,4 +11,3 @@ if [ -x "$TESTROOT"/bin/defaultgoal-"$DEFAULTGOAL" ]; then
 else
     defaultgoal-"$DEFAULTGOAL" || error "no default goal $DEFAULTGOAL"
 fi
-

@@ -62,10 +62,10 @@ do_serial() {
     local -r paramters="$2"
 
     for t in $tests; do
-        echo -e "\n+++ start: $GOAL $t ..."
+        echo -e "\n+++ start: $paramters $t ..."
         do_work "$t" "$paramters"
         do_result "$t"
-        echo -e "+++ finish: $GOAL $t ..."
+        echo -e "+++ finish: $paramters $t ..."
     done
 }
 
