@@ -2,7 +2,8 @@
 
 file="/tmp/hosts"
 
-method=""
+#method="_ssh"
+#method="_telnet"
 
 echo "test case 1"
 "putfile${method}" "$file" __tmp

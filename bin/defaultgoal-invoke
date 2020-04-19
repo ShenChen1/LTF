@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -aeu
+source _shellflags
+
+case "$TESTCONFIG" in
+    /*) true ;;
+    *) TESTCONFIG="$(pwd)/$TESTCONFIG"
+esac
+checktestconfig || exit 1
+
+E=0
+TESTCONFIG="$TESTCONFIG" "invoke" "$INVOKE_CMD" || E=$?
+
+exit $E
