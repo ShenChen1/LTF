@@ -39,8 +39,9 @@ class telnet(object):
             raise RuntimeError("runcmd err:%s" % cmd)
         else:
             buf = buf.replace(ret, " ")
-            if buf.find("+++-exit-+++") != -1:
-                raise RuntimeError(buf)
+            ret = "+++-exit-+++"
+            if buf.find(ret) != -1:
+                raise RuntimeError(buf.splitlines()[:-1])
 
 def __build_new_dst(file, dst):
     if dst[len(dst) - 1] == '/':
@@ -55,7 +56,7 @@ def main():
     (ipaddr, port, login, password, prompt, src, dst) = sys.argv[1:]
 
     if not os.access(src, os.R_OK):
-        raise RuntimeError("file err:%s" % src)
+        raise RuntimeError("file err: %s nonexistent" % src)
     dst = __build_new_dst(os.path.basename(src), dst)
 
     # prepare

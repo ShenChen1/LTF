@@ -5,4 +5,4 @@ INVOKE_METHOD=ssh
 source _shellflags
 source _invokeflags
 
-scp.pl "$SSHPORT" "$PASSWORD" "$LOGIN@$IPADDR:$1" "${2:-$1}"
+scp.py "$SSHPORT" "$PASSWORD" "$LOGIN@$IPADDR:$1" "${2:-$1}"

@@ -3,7 +3,7 @@
 set port [lrange $argv 0 0]
 set userhost [lrange $argv 1 1]
 set password [lrange $argv 2 2]
-eval set cmd [lrange $argv 3 [llength $argv]]
+set cmd [lrange $argv 3 [llength $argv]]
 
 set timeout 25
 eval spawn ssh -q -p $port -o \"RSAAuthentication=no\" -o \"PubkeyAuthentication=no\" -o \"StrictHostKeyChecking=no\" -o \"UserKnownHostsFile=/dev/null\" -F /dev/null $userhost $cmd || echo +++-exit-+++ \$\?
