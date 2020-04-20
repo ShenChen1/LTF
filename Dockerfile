@@ -7,8 +7,6 @@ RUN apt-get update \
     g++ \
     gcc \
     make \
-    perl \
-    pkg-config \
     python \
     vim \
     sudo \

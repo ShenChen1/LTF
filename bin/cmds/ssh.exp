@@ -6,7 +6,7 @@ set password [lrange $argv 2 2]
 set cmd [lrange $argv 3 [llength $argv]]
 
 set timeout 25
-eval spawn ssh -q -p $port -o \"RSAAuthentication=no\" -o \"PubkeyAuthentication=no\" -o \"StrictHostKeyChecking=no\" -o \"UserKnownHostsFile=/dev/null\" -F /dev/null $userhost $cmd || echo +++-exit-+++ \$\?
+eval spawn ssh -q -p $port -o \"PubkeyAuthentication=no\" -o \"PubkeyAuthentication=no\" -o \"StrictHostKeyChecking=no\" -o \"UserKnownHostsFile=/dev/null\" -F /dev/null $userhost $cmd || echo +++-exit-+++ \$\?
 expect {
     default { exit 2 }
     "Are you sure you want to continue connecting" {

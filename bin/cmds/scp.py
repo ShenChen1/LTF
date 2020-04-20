@@ -17,7 +17,6 @@ def main():
 
     r = os.popen("scp.exp" + args)
     lines = r.readlines()
-    print lines
     for line in lines:
         l += 1
         line = line.replace('\r\n', '\n')
