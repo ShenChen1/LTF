@@ -1,1 +1,0 @@
-export TESTTARGET ?= demo1
