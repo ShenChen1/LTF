@@ -11,5 +11,5 @@ ssh)
 testhelper)
     getfile_testhelper "$@"
     ;;
-*) error cannot putfile, unknown method "$INVOKE_METHOD" ;;
+*) error cannot getfile, unknown method "$INVOKE_METHOD" ;;
 esac

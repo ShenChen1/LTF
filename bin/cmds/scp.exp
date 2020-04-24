@@ -5,7 +5,7 @@ set password [lrange $argv 1 1]
 set args [lrange $argv 2 [llength $argv]]
 
 set timeout 100
-eval spawn scp -q -P $port -o \"PubkeyAuthentication no\" -o \"PubkeyAuthentication no\" -o \"StrictHostKeyChecking no\" -o \"UserKnownHostsFile /dev/null\" -F /dev/null $args
+eval spawn scp -q -P $port -o \"PubkeyAuthentication no\" -o \"StrictHostKeyChecking no\" -o \"UserKnownHostsFile /dev/null\" -F /dev/null $args
 expect {
     default { exit 2 }
     "Are you sure you want to continue connecting" {
