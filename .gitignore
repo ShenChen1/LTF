@@ -51,6 +51,8 @@ Mkfile.old
 dkms.conf
 
 __*
+testconfig.mk
 xml-reports
-bin/cmds/testhelper
+
 analyzers/envparser.py
+bin/cmds/testhelper
