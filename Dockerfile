@@ -7,6 +7,7 @@ RUN apt-get update \
     g++ \
     gcc \
     make \
+    iproute2 \
     python \
     vim \
     sudo \
@@ -14,6 +15,6 @@ RUN apt-get update \
  && ln -sf /bin/bash /bin/sh \
  && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
  && echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config \
- && sed 's/''root:\*''/''root:$6$6a9oWBiKXkD67zg1$wf3QHkMt5gVzejB1ZWsooWg45jWoeBFRm5BCRRRu1G15xkJOhYQlrafhGGsrECtSOJbWIYRd14aZl44blJoFz.''/g' -i /etc/shadow
+ && echo root:123456 | chpasswd
 
 CMD /etc/init.d/ssh restart && /bin/bash

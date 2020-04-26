@@ -43,7 +43,9 @@ copyfiles() {
 }
 
 do_work() {
+    echo -e "\n+++ start: \"$1\" $2 ..."
     makecall -C "$1" $2
+    echo -e "+++ finish: \"$1\" $2 ..."
 }
 
 do_result() {
@@ -62,10 +64,8 @@ do_serial() {
     local -r paramters="$2"
 
     for t in $tests; do
-        echo -e "\n+++ start: $paramters $t ..."
         do_work "$t" "$paramters"
         do_result "$t"
-        echo -e "+++ finish: $paramters $t ..."
     done
 }
 
