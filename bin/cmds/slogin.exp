@@ -1,0 +1,18 @@
+#!/usr/bin/env expect
+
+set port [lrange $argv 0 0]
+set userhost [lrange $argv 1 1]
+set password [lrange $argv 2 2]
+
+set timeout 25
+eval spawn ssh -q -p $port -o \"PubkeyAuthentication no\" -o \"UserKnownHostsFile /dev/null\" -F /dev/null $userhost
+expect {
+    default { exit 2 }
+    "Are you sure you want to continue connecting" {
+        send "yes\r"
+        exp_continue
+    }
+    assword: { send -- $password\r }
+}
+
+interact

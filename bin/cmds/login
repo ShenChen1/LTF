@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eau
+source _shellflags
+source _invokeflags
+
+case "$INVOKE_METHOD" in
+ssh)
+    login_ssh "$@"
+    ;;
+telnet)
+    login_telnet "$@"
+    ;;
+*) error cannot login, unknown method "$INVOKE_METHOD" ;;
+esac

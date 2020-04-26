@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+INVOKE_METHOD=telnet
+source _shellflags
+source _invokeflags
+
+tlogin.exp "$IPADDR" "$TELNETPORT" "$LOGIN" "$PASSWORD"
