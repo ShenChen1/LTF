@@ -1,0 +1,5 @@
+# Host
+ipaddr=127.0.0.1
+login=root
+password=123456
+arch=x86_64-redhat-linux

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-file="/tmp/hosts"
+file="./__tmpdir/binary"
+mkdir -p $(dirname $file)
+dd if=/dev/urandom of="$file" bs=1M count=2
 
 #method="_ssh"
 #method="_telnet"
@@ -16,8 +18,8 @@ echo "test case 2"
 diff __tmp1 "$file"
 
 echo "test case 3"
-"putfile${method}" "$file" "$file.tmp"
-"getfile${method}" "$file.tmp" __tmp2
+"putfile${method}" "$file" "/tmp/$(basename ${file}.tmp)"
+"getfile${method}" "/tmp/$(basename ${file}.tmp)" __tmp2
 diff __tmp2 "$file"
 
 echo "test failure 1"
