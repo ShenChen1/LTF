@@ -1,9 +1,9 @@
 #!/usr/bin/env expect
 
-set host [lrange $argv 0 0]
-set port [lrange $argv 1 1]
-set user [lrange $argv 2 2]
-set password [lrange $argv 3 3]
+set host [lindex $argv 0]
+set port [lindex $argv 1]
+set user [lindex $argv 2]
+set password [lindex $argv 3]
 
 set timeout 25
 eval spawn telnet $host $port
@@ -16,5 +16,5 @@ expect {
         send "$password\r"
     }
 }
-
+set timeout 300
 interact

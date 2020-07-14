@@ -1,8 +1,8 @@
 #!/usr/bin/env expect
 
-set port [lrange $argv 0 0]
-set userhost [lrange $argv 1 1]
-set password [lrange $argv 2 2]
+set port [lindex $argv 0]
+set userhost [lindex $argv 1]
+set password [lindex $argv 2]
 
 set timeout 25
 eval spawn ssh -q -p $port -o \"PubkeyAuthentication no\" -o \"UserKnownHostsFile /dev/null\" -F /dev/null $userhost
@@ -14,5 +14,5 @@ expect {
     }
     assword: { send -- $password\r }
 }
-
+set timeout 300
 interact

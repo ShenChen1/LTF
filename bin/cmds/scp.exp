@@ -1,7 +1,7 @@
 #!/usr/bin/env expect
 
-set port [lrange $argv 0 0]
-set password [lrange $argv 1 1]
+set port [lindex $argv 0]
+set password [lindex $argv 1]
 set args [lrange $argv 2 [llength $argv]]
 
 set timeout 100
@@ -14,5 +14,4 @@ expect {
     }
     assword: { send -- $password\r }
 }
-
 expect eof

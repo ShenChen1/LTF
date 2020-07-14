@@ -1,10 +1,10 @@
 #!/usr/bin/env expect
 
-set host [lrange $argv 0 0]
-set port [lrange $argv 1 1]
-set user [lrange $argv 2 2]
-set password [lrange $argv 3 3]
-set prompt [lrange $argv 4 4]
+set host [lindex $argv 0]
+set port [lindex $argv 1]
+set user [lindex $argv 2]
+set password [lindex $argv 3]
+set prompt [lindex $argv 4]
 eval set cmd [lrange $argv 5 [llength $argv]]
 
 set timeout 25
@@ -23,5 +23,5 @@ expect {
     }
 }
 set timeout 300
-
 expect "$prompt"
+send "exit\r"
