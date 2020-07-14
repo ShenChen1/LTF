@@ -1,0 +1,7 @@
+# Hi3516
+ipaddr=192.168.1.120
+login=root
+password=oZPS0POrRieRtu
+arch=arm-himix200-linux
+setupmethod=telnet
+prompt=#
