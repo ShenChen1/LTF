@@ -35,7 +35,7 @@ docker build -t env-for-ltf .
 docker run \
 -it `#Interactive with console` \
 --rm `#Automatically remove container when it exits` \
--v $(pwd):/work/LTF `#Mount icomd directory` \
+-v $(pwd):/work/LTF `#Mount LTF directory` \
 -w /work/LTF `#Set initial directory` \
 env-for-ltf
 ```
